@@ -1,0 +1,14 @@
+Makefile
+copy.txt
+includes
+libft
+minishell
+obj
+outfile.txt
+pipes.c
+srcs
+token.c
+token_pars_copy.c
+cat$
+cattle$
+catfish$

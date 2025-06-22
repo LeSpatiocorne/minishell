@@ -1,14 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   ft_tolower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nidruon <nidruon@student.42perpignan.fr    +#+  +:+       +#+        */
+/*   By: mle-brie <mle-brie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/30 23:33:05 by nidruon           #+#    #+#             */
-/*   Updated: 2025/04/30 23:34:17 by nidruon          ###   ########.fr       */
+/*   Created: 2024/11/05 12:15:13 by mle-brie          #+#    #+#             */
+/*   Updated: 2024/11/05 13:53:23 by mle-brie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
+int	ft_tolower(int c)
+{
+	if (c >= 'A' && c <= 'Z')
+		c = c + 32;
+	return (c);
+}
+/*int	main(void)
+{
+	char	test = '...';
+	printf("%c\n", ft_tolower(test));
+	return (0);
+}*/
