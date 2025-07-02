@@ -12,8 +12,21 @@ OBJDIR := obj
 SRCDIR := srcs
 INCDIR := includes
 
-SRCS := $(shell find $(SRCDIR) -name "*.c")
+#SRCS := $(shell find $(SRCDIR) -name "*.c")
 
+SRCS := srcs/builtins/ft_cd.c srcs/builtins/ft_echo.c srcs/builtins/ft_env.c \
+		srcs/builtins/ft_exit.c srcs/builtins/ft_export.c srcs/builtins/ft_pwd.c \
+		srcs/builtins/ft_unset.c srcs/env/env_list_to_tab.c srcs/env/init_env.c \
+		srcs/execution/exec_utils.c srcs/execution/execute_multiple.c \
+		srcs/execution/execute.c srcs/execution/handle_builtins.c srcs/execution/pipes_utils.c \
+		srcs/parser/cmd_parsing.c srcs/parser/heredoc_utils.c srcs/parser/heredoc.c \
+		srcs/parser/path_parsing.c srcs/parser/redirections.c \
+		srcs/parser/token_bool.c srcs/parser/token_orga.c srcs/parser/token_utils.c \
+		srcs/parser/token.c \
+		srcs/utils/cleanup.c srcs/utils/cmd_parsing_util.c srcs/utils/env_utils.c \
+		srcs/utils/exit_status.c srcs/utils/ft_signals.c srcs/utils/variable_expansion.c \
+		srcs/utils/welcome_n_shlvl.c srcs/main.c
+	
 OBJS := $(SRCS:%.c=$(OBJDIR)/%.o)
 
 all: $(NAME)

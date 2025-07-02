@@ -6,7 +6,7 @@
 /*   By: nidruon <nidruon@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 16:55:18 by nidruon           #+#    #+#             */
-/*   Updated: 2025/06/22 14:52:06 by nidruon          ###   ########.fr       */
+/*   Updated: 2025/06/22 18:38:28 by nidruon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	handle_child_builtin(char **args, t_env_list *env)
 		return (0);
 	}
 	if (ft_strcmp(args[0], "echo") == 0)
-		return (ft_echo(args, env));
+		return (ft_echo(args));
 	if (ft_strcmp(args[0], "env") == 0)
 	{
 		ft_env(env);

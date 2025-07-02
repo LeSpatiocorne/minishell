@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_signals.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mle-brie <mle-brie@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: mle-brie <mle-brie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 13:24:15 by nidruon           #+#    #+#             */
-/*   Updated: 2025/06/22 14:20:55 by mle-brie         ###   ########.fr       */
+/*   Updated: 2025/06/23 16:51:00 by mle-brie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,10 @@ void	handle_sigint(int sig)
 	rl_redisplay();
 }
 
-void	handle_sigquit(int sig)
-{
-	(void)sig;
-	g_signal = 131;
-}
-
 void	setup_signals(void)
 {
 	signal(SIGINT, handle_sigint);
-	signal(SIGQUIT, handle_sigquit);
+	signal(SIGQUIT, SIG_IGN);
 	signal(SIGTSTP, SIG_IGN);
 }
 

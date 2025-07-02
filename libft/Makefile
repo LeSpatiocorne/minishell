@@ -1,7 +1,7 @@
 NAME = libft.a
 
 CC = cc
-FLAGS = -Wextra -Werror -Wall -g
+FLAGS = -Wextra -Werror -Wall -g -fPIE
 
 OBJDIR := obj
 

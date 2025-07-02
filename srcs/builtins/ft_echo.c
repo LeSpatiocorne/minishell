@@ -6,7 +6,7 @@
 /*   By: nidruon <nidruon@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 02:55:44 by nidruon           #+#    #+#             */
-/*   Updated: 2025/06/20 20:07:52 by nidruon          ###   ########.fr       */
+/*   Updated: 2025/06/22 18:35:07 by nidruon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,10 @@ static int	is_n_option(char *str)
 	return (1);
 }
 
-int	ft_echo(char **args, t_env_list *env)
+int	ft_echo(char **args)
 {
 	int		i;
 	int		newline;
-	char	*expanded;
 
 	i = 0;
 	newline = 1;
@@ -40,14 +39,7 @@ int	ft_echo(char **args, t_env_list *env)
 		newline = 0;
 	while (args[i])
 	{
-		expanded = expand_variables(args[i], env);
-		if (expanded)
-		{
-			ft_putstr_fd(expanded, 1);
-			free(expanded);
-		}
-		else
-			ft_putstr_fd(args[i], 1);
+		ft_putstr_fd(args[i], 1);
 		if (args[i + 1])
 			ft_putchar_fd(' ', 1);
 		i++;

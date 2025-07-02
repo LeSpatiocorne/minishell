@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mle-brie <mle-brie@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: mle-brie <mle-brie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 20:53:46 by mle-brie          #+#    #+#             */
-/*   Updated: 2025/06/22 15:07:53 by mle-brie         ###   ########.fr       */
+/*   Updated: 2025/06/23 16:50:41 by mle-brie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	child_process(t_cmd *cmd, t_cmd *cmd_list,
 
 	status = 0;
 	close_pipes_except_current(cmd, cmd_list);
+	fd_helper_function(cmd, cmd_list, tokens, env);
 	dup2_helper_function(cmd, tokens, env);
 	if (is_child_builtin(cmd->args[0]))
 	{
@@ -65,7 +66,6 @@ int	single_cmd(t_cmd *cmd, t_cmd *cmd_list, t_env_list *env, t_token **tokens)
 	else
 		exit_status = status;
 	signal(SIGINT, handle_sigint);
-	signal(SIGQUIT, handle_sigquit);
 	return (set_exit_status(exit_status));
 }
 
@@ -83,8 +83,6 @@ int	multiple_cmds(t_cmd *cmd_list, t_env_list *env, t_token **tokens)
 
 int	execute(t_cmd *cmd, t_env_list *env, t_token **tokens)
 {
-	if (cmd->input_fd == -1 || cmd->output_fd == -1)
-		return (1);
 	if (!cmd->next && is_parent_builtin(cmd->args[0]))
 		return (handle_parent_builtin(cmd, env, tokens));
 	else if (!cmd->next)
@@ -92,12 +90,3 @@ int	execute(t_cmd *cmd, t_env_list *env, t_token **tokens)
 	else
 		return (multiple_cmds(cmd, env, tokens));
 }
-
-/*
-norminette work :
-all multiple cmds things belong together in a multiple_command.c file
-/!\
-	fork_all_cmds() is very long, separate in two, thx /!\
-
-child_process(), single_cmd() and execute() stay here
-*/

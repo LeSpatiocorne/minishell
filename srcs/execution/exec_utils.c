@@ -6,7 +6,7 @@
 /*   By: mle-brie <mle-brie@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 14:05:31 by mle-brie          #+#    #+#             */
-/*   Updated: 2025/06/22 14:52:36 by mle-brie         ###   ########.fr       */
+/*   Updated: 2025/06/23 16:05:15 by mle-brie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,13 @@ void	dup2_helper_function(t_cmd *cmd, t_token **tokens, t_env_list *env)
 	}
 }
 
-//other?
+void	fd_helper_function(t_cmd *cmd, t_cmd *cmd_list,
+						t_token **tokens, t_env_list *env)
+{
+	if (cmd->input_fd == -1 || cmd->output_fd == -1)
+	{
+		free_all(tokens, cmd_list, env);
+		set_exit_status(1);
+		exit(1);
+	}
+}

@@ -6,7 +6,7 @@
 /*   By: mle-brie <mle-brie@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 12:32:30 by mle-brie          #+#    #+#             */
-/*   Updated: 2025/06/22 15:37:05 by mle-brie         ###   ########.fr       */
+/*   Updated: 2025/06/23 16:07:44 by mle-brie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ void	handle_redirs_per_cmd(t_token *start, t_token *end, t_cmd *cmd)
 				handle_append(token, cmd);
 			else
 				handle_redir_out(token, cmd);
+			if (cmd->output_fd == -1)
+				break ;
 			token = token->next;
 			continue ;
 		}
@@ -105,7 +107,3 @@ void	handle_redirs_per_cmd(t_token *start, t_token *end, t_cmd *cmd)
 		token = token->next;
 	}
 }
-
-/*
-norminette okay except few notes
-*/

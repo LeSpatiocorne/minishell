@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_parsing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mle-brie <mle-brie@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: nidruon <nidruon@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 16:47:05 by nidruon           #+#    #+#             */
-/*   Updated: 2025/06/22 16:10:51 by mle-brie         ###   ########.fr       */
+/*   Updated: 2025/06/22 19:03:39 by nidruon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	free_cmd_list(t_cmd *cmd)
 	}
 }
 
-static void	add_cmd_node(t_cmd **cmd_list, t_cmd **current, char **args)
+void	add_cmd_node(t_cmd **cmd_list, t_cmd **current, char **args)
 {
 	t_cmd	*new_node;
 
@@ -70,43 +70,53 @@ static void	add_cmd_node(t_cmd **cmd_list, t_cmd **current, char **args)
 	}
 }
 
-void	helper_parse(t_token *token, char **args, int *argc)
+static void	helper_parse(t_token **token_ptr, char **args, int *argc,
+	t_env_list *env)
 {
+	t_token	*token;
+	char	*expanded_value;
+
+	token = *token_ptr;
+	if (!token)
+		return ;
 	if (token->type == REDIR_IN || token->type == HEREDOC
 		|| token->type == APPEND || token->type == REDIR_OUT)
-		token = token->next;
+	{
+		if (token->next)
+			token = token->next;
+	}
 	else if (token->type == CMD || token->type == ARG)
-		args[(*argc)++] = ft_strdup(token->value);
+	{
+		expanded_value = expand_variables(token->value, env);
+		args[(*argc)++] = expanded_value;
+	}
+	*token_ptr = token;
 }
 
 t_cmd	*parse_cmd_from_token(t_token *token, t_token *cmd_start,
-								t_token *cmd_end, int argc)
+			t_env_list *env)
 {
-	t_cmd	*cmd_list;
-	t_cmd	*current;
-	char	**args;
+	t_parsing_data	*p_data;
 
-	args = malloc(sizeof(char *) * MAX_ARGS);
-	current = NULL;
-	cmd_list = NULL;
+	p_data = init_parsing_data();
+	if (!p_data)
+		return (NULL);
+	p_data->cmd_start = cmd_start;
 	while (token)
 	{
-		helper_parse(token, args, &argc);
+		helper_parse(&token, p_data->args, &p_data->argc, env);
 		if (token->type == PIPE || !token->next)
 		{
-			args[argc] = NULL;
-			add_cmd_node(&cmd_list, &current, args);
-			cmd_end = token;
-			handle_redirs_per_cmd(cmd_start, cmd_end, current);
-			argc = 0;
-			args = malloc(sizeof(char *) * MAX_ARGS);
-			cmd_start = token->next;
+			p_data->args = process_pipe_or_end(p_data, token);
+			if (!p_data->args)
+			{
+				free(p_data);
+				return (NULL);
+			}
 		}
 		token = token->next;
 	}
-	if (args)
-		free(args);
-	return (cmd_list);
+	return (free_parsing_data(p_data));
 }
 
 //##############################################################

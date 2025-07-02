@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mle-brie <mle-brie@student.42perpignan.    +#+  +:+       +#+        */
+/*   By: nidruon <nidruon@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 20:00:26 by nidruon           #+#    #+#             */
-/*   Updated: 2025/05/15 13:09:19 by mle-brie         ###   ########.fr       */
+/*   Updated: 2025/06/23 14:19:23 by nidruon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int	ft_cd(char **args, t_env_list *env)
 	char	*target;
 	char	buf[PATH_MAX];
 
+	if (args[2])
+		return (write(2, "mew-nishell: Too Many Arguments\n", 32));
 	if (!args[1])
 		target = get_env_value(env, "HOME");
 	else if (ft_strcmp(args[1], "-") == 0)
